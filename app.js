@@ -32,12 +32,23 @@ const main = async () => {
   await page.$eval(deleteUserStatusSelector, btn => btn.click())
     .catch(() => console.log('empty user status.'))
 
-  const now = moment()
+  const now = moment();
   now.locale('ko')
 
+  console.log(now.format())
+  console.log('요일'+now.weekday())
+
   switch (now.weekday()) {
-    case 2:
-    case 4:
+    case 1:
+      // 화요일
+      // 사무실 근무
+      await page.$eval(
+        'body > div.c-sk-modal_portal > div > div > div.c-sk-modal_content.p-custom_status_modal__content > div > div.c-scrollbar__hider > div > div > fieldset:nth-child(2) > div > div:nth-child(1) > button',
+        btn => btn.click())
+      console.log('set status → 사무실 근무')
+      break      
+    case 3:
+      // 목요일
       // 사무실 근무
       await page.$eval(
         'body > div.c-sk-modal_portal > div > div > div.c-sk-modal_content.p-custom_status_modal__content > div > div.c-scrollbar__hider > div > div > fieldset:nth-child(2) > div > div:nth-child(1) > button',
